@@ -41,7 +41,7 @@ func GetCurrentMainGopher() string {
 	}
 
 	//No Which... hmm.
-	if err != nil && *verbose {
+	if *verbose {
 		os.Stderr.Write([]byte("[ERROR] pkg idem: failure on exec of [" + getIdemSHA.String() + "]:\n\t" + err.Error() + "\n"))
 	}
 
