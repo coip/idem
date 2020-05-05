@@ -9,7 +9,7 @@ import (
 var (
 	verbose = flag.Bool("v", false, "exposes some ~wiring for observability")
 
-	getIdemSHA = &exec.Cmd{
+	getIdemSHA = exec.Cmd{
 		Args: []string{"git", "log", "-1", "--pretty=format:%h"},
 	}
 )
