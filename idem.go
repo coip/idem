@@ -34,10 +34,12 @@ func GetCurrentMainGopher() string {
 	}
 
 	//attempt to identify which
-	v, err := getIdemSHA.CombinedOutput()
+	which, err := getIdemSHA.CombinedOutput()
 	if err == nil {
 		//Happy path!
-		return where + "/" + who + ":" + string(v)
+		return where + "/" + who + ":" + string(which)
+	} else {
+		which = []byte("unknownversion")
 	}
 
 	//No Which... hmm.
@@ -46,6 +48,6 @@ func GetCurrentMainGopher() string {
 	}
 
 	//Eh some context is better than none..
-	return where + "/" + who + ":unknownversion"
+	return where + "/" + who + ":" + string(which)
 
 }
