@@ -24,6 +24,9 @@ func init() {
 // where the gopher is running.
 func GetCurrentMainGopher() string {
 
+	//attempt to identify Who
+	who := os.Args[0]
+
 	//attempt to identify Where
 	host, err := os.Hostname()
 	if err != nil {
@@ -34,7 +37,7 @@ func GetCurrentMainGopher() string {
 	v, err := getIdemSHA.CombinedOutput()
 	if err == nil {
 		//Happy path!
-		return host + "/" + os.Args[0] + ":" + string(v)
+		return host + "/" + who + ":" + string(v)
 	}
 
 	//No Which... hmm.
@@ -43,6 +46,6 @@ func GetCurrentMainGopher() string {
 	}
 
 	//Eh some context is better than none..
-	return host + "/" + os.Args[0] + ":unknownversion"
+	return host + "/" + who + ":unknownversion"
 
 }
