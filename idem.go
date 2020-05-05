@@ -24,28 +24,36 @@ func init() {
 // where the gopher is running.
 func GetCurrentMainGopher() string {
 
+	//Scope at play:
+	var (
+		who, where string
+		which      []byte //os.Exec output
+
+		err error
+	)
+
 	//attempt to identify Who
-	who := os.Args[0]
+	who = os.Args[0]
 
 	//attempt to identify Where
-	where, err := os.Hostname()
+	where, err = os.Hostname()
 	if err != nil {
-		where = "unknown"
+		where = "unknownhost"
 	}
 
 	//attempt to identify which
-	which, err := getIdemSHA.CombinedOutput()
+	which, err = getIdemSHA.CombinedOutput()
+
+	//Happy path exit!
 	if err == nil {
-		//Happy path!
 		return where + "/" + who + ":" + string(which)
-	} else {
-		which = []byte("unknownversion")
 	}
 
 	//No Which... hmm.
 	if *verbose {
 		os.Stderr.Write([]byte("[ERROR] pkg idem: failure on exec of [" + getIdemSHA.String() + "]:\n\t" + err.Error() + "\n"))
 	}
+	which = []byte("unknownSHA")
 
 	//Eh some context is better than none..
 	return where + "/" + who + ":" + string(which)
